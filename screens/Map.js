@@ -18,8 +18,8 @@ export default class Map extends React.Component {
 
         let { status } = await Permissions.AskAsync(Permissions.LOCATION);
         position = await Location.getCurrentPositionAsyng({});
-
     
+
     Geolocation.getCurrentPosition(
         position => {
             this.setState({
