@@ -1,7 +1,17 @@
-export class CameraScreen extends React.Component {
+import * as React from 'react';
+import {
+  View,
+  Text,
+} from 'react-native';
+
+
+
+
+
+export default class CameraScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text>CameraScreen</Text>
       </View>
     )

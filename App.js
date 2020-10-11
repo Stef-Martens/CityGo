@@ -1,34 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
-  Text,
-  StatusBar,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createAppContainer} from 'react-navigation';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import MapScreen from './screens/MapScreen';
+import CameraScreen from './screens/CameraScreen';
+import InventoryScreen from './screens/InventoryScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
 const TabNavigator = createMaterialBottomTabNavigator(
   {
