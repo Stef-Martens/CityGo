@@ -14,89 +14,91 @@ export default class Map extends React.Component {
     }
 
 
-    async componentDidMount() {
+    async componentDidMount() {     
 
-        let { status } = await Permissions.AskAsync(Permissions.LOCATION);
-        position = await Location.getCurrentPositionAsyng({});
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if(status === 'granted') {
+            Geolocation.getCurrentPosition(
+                position => {
+                    this.setState({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        coordinates: this.state.coordinates.concat({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        })
+                    });
+                },
+                error => {
+                    Alert.alert(error.message.toString());
+                },
+                {
+                    showLocationDialog: true,
+                    enableHighAccuracy: true,
+                    timeout: 20000,
+                    maximumAge: 0
+                }
+            );
     
+            Geolocation.watchPosition(
+                position => {
+                    this.setState({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        coordinates: this.state.coordinates.concat({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                        }),
+                    });
+                },
+                error => {
+                    console.log(error);
+                },
+                {
+                    showLocationDialog: true,
+                    enableHighAccuracy: true,
+                    timeout: 20000,
+                    maximumAge: 0,
+                    distanceFilter: 0,
+                },
+            );
+         }
 
-    Geolocation.getCurrentPosition(
-        position => {
-            this.setState({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                coordinates: this.state.coordinates.concat({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                }),
-            });
-      },
-error => {
-    Alert.alert(error.message.toString());
-},
-{
-    showLocationDialog: true,
-    enableHighAccuracy: true,
-    timeout: 20000,
-    maximumAge: 0,
-},
-    );
 
-Geolocation.watchPosition(
-    position => {
-        this.setState({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            coordinates: this.state.coordinates.concat({
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-            }),
-        });
-    },
-    error => {
-        console.log(error);
-    },
-    {
-        showLocationDialog: true,
-        enableHighAccuracy: true,
-        timeout: 20000,
-        maximumAge: 0,
-        distanceFilter: 0,
-    },
-);
-  }
-render() {
-    return (
-        <View style={{ flex: 1 }}>
-            <MapView
-                provider={PROVIDER_GOOGLE}
-                customMapStyle={mapStyle}
-                style={{ flex: 1 }}
-                region={{
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}>
-                <Marker
-                    coordinate={{
+
+    }
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    customMapStyle={mapStyle}
+                    style={{ flex: 1 }}
+                    region={{
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
-                    }}></Marker>
-                <Polyline
-                    coordinates={this.state.coordinates}
-                    strokeColor="#bf8221"
-                    strokeColors={[
-                        '#bf8221',
-                        '#ffe066',
-                        '#ffe066',
-                        '#ffe066',
-                        '#ffe066',
-                    ]}
-                    strokeWidth={3}
-                />
-            </MapView>
-        </View>
-    );
-}
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}>
+                    <Marker
+                        coordinate={{
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                        }}></Marker>
+                    <Polyline
+                        coordinates={this.state.coordinates}
+                        strokeColor="#bf8221"
+                        strokeColors={[
+                            '#bf8221',
+                            '#ffe066',
+                            '#ffe066',
+                            '#ffe066',
+                            '#ffe066',
+                        ]}
+                        strokeWidth={3}
+                    />
+                </MapView>
+            </View>
+        );
+    }
 }
