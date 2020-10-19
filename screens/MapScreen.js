@@ -65,12 +65,13 @@ import {
   Text,
 } from 'react-native';
 import Map from './Map';
+import Map2 from './Map2';
 
 export default class MapScreen extends React.Component{
     render(){
       return (
         <View style={{flex: 1}}>
-          <Map />
+          <Map2 />
         </View>
       );
     }
