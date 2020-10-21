@@ -73,7 +73,8 @@ export default class Map2 extends React.Component {
             lat: 2.951269758090068,
             lng: 101.964111328125
           };
-        
+        /*
+        // Dit is code om te zien of je in een bepaald polygon bent
           GeoFencing.containsLocation(point, polygon)
             .then(() => Alert.alert(
               'You need to...'
@@ -81,6 +82,7 @@ export default class Map2 extends React.Component {
             .catch(() => Alert.alert(
               'You need to...'
            ))
+           */
         }
       })
   }
