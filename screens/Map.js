@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { View, Text, PermissionsAndroid, Alert, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
@@ -102,3 +102,4 @@ export default class Map extends React.Component {
         );
     }
 }
+*/
