@@ -1,105 +1,60 @@
-/*import React from 'react';
-import { View, Text, PermissionsAndroid, Alert, Platform } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
-import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
+import React from 'react'
+import { View, Alert, Text, TextInput, StyleSheet } from 'react-native'
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline, Polygon } from 'react-native-maps';
 import { mapStyle } from './mapStyle';
-export default class Map extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            latitude: 0,
-            longitude: 0,
-            coordinates: [],
-        };
+import GeoFencing from 'react-native-geo-fencing';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MapZelf from './MapZelf'
+import QuestionScreen from './QuestionScreen';
+import TicTacToe from './TicTacToe';
+
+const latitudeDelta = 0.0100
+const longitudeDelta = 0.0080
+const polygon = [
+  { latitude: 3.1336599385978805, longitude: 101.31866455078125 },
+  { latitude: 51.22369444, lnlongitudeg: 101.66198730468757 },
+  { latitude: 3.091150714460597, longitude: 4.41138889 },
+  { latitude: 3.1336599385978805, longitude: 101.31866455078125 } // last point has to be same as first point
+];
+
+
+export default class Map2 extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state =
+    {
+      componentSelected: 'One',
     }
+  }
 
+  changeComponent = (component) => {
+    this.setState({ componentSelected: component });
+  }
 
-    async componentDidMount() {     
-
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        if(status === 'granted') {
-            Geolocation.getCurrentPosition(
-                position => {
-                    this.setState({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        coordinates: this.state.coordinates.concat({
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        })
-                    });
-                },
-                error => {
-                    Alert.alert(error.message.toString());
-                },
-                {
-                    showLocationDialog: true,
-                    enableHighAccuracy: true,
-                    timeout: 20000,
-                    maximumAge: 0
-                }
-            );
-    
-            Geolocation.watchPosition(
-                position => {
-                    this.setState({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        coordinates: this.state.coordinates.concat({
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                        }),
-                    });
-                },
-                error => {
-                    console.log(error);
-                },
-                {
-                    showLocationDialog: true,
-                    enableHighAccuracy: true,
-                    timeout: 20000,
-                    maximumAge: 0,
-                    distanceFilter: 0,
-                },
-            );
-         }
-
-
-
+  renderComponent(component) {
+    if (component == 'One') {
+      return <MapZelf changeComponent={this.changeComponent} />
+    } else if (component == 'Two') {
+      return <QuestionScreen changeComponent={this.changeComponent} />
+    } else if (component == 'Three') {
+      return <TicTacToe changeComponent={this.changeComponent} />
     }
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <MapView
-                    provider={PROVIDER_GOOGLE}
-                    customMapStyle={mapStyle}
-                    style={{ flex: 1 }}
-                    region={{
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}>
-                    <Marker
-                        coordinate={{
-                            latitude: this.state.latitude,
-                            longitude: this.state.longitude,
-                        }}></Marker>
-                    <Polyline
-                        coordinates={this.state.coordinates}
-                        strokeColor="#bf8221"
-                        strokeColors={[
-                            '#bf8221',
-                            '#ffe066',
-                            '#ffe066',
-                            '#ffe066',
-                            '#ffe066',
-                        ]}
-                        strokeWidth={3}
-                    />
-                </MapView>
-            </View>
-        );
-    }
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        {this.renderComponent(this.state.componentSelected)}
+      </View>
+    );
+  }
 }
-*/
+
+
+
+
+
+
