@@ -37,7 +37,7 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
         activeColor: '#ffffff',
         inactiveColor: '#a3c2fa',
-        barStyle: { backgroundColor: '#2163f6' },
+        barStyle: { backgroundColor: '#000000' },
       }
     },
     Inventory: {
@@ -49,8 +49,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
         activeColor: '#ffffff',
-        inactiveColor: '#92c5c2',
-        barStyle: { backgroundColor: '#2c6d6a' },
+        inactiveColor: '#a3c2fa',
+        barStyle: { backgroundColor: '#000000' },
       }
     },
     Profile: {
@@ -62,16 +62,16 @@ const TabNavigator = createMaterialBottomTabNavigator(
           </View>
         ),
         activeColor: '#ffffff',
-        inactiveColor: '#ebaabd',
-        barStyle: { backgroundColor: '#d13560' },
+        inactiveColor: '#a3c2fa',
+        barStyle: { backgroundColor: '#000000' }, 
       }
-    },
+    }
   },
   {
     initialRouteName: 'Map',
     activeColor: '#ffffff',
-    inactiveColor: '#bda1f7',
-    barStyle: { backgroundColor: '#6948f4' },
+    inactiveColor: '#a3c2fa',
+    barStyle: { backgroundColor: '#000000' },
   }
 );
 
