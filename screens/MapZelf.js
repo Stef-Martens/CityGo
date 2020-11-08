@@ -29,7 +29,7 @@ export default class Mapke extends React.Component {
             style: "cancel"
           },
           // nu standaard naar 2 maar moet van api komen naar wat soort vraag het moet gaan
-          { text: "OK", onPress: () => (this.props.changeComponent('Three')) }
+          { text: "OK", onPress: () => (this.props.changeComponent('Two')) }
         ],
         { cancelable: false }
       );
