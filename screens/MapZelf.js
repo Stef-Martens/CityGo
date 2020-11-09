@@ -76,12 +76,6 @@ export default class Mapke extends React.Component {
                 }
               })
             })
-            const meir = [
-              { lat: 3.1336599385978805, lng: 101.31866455078125 },
-              { lat: 3.3091633559540123, lng: 101.66198730468757 },
-              { lat: 3.091150714460597, lng: 101.92977905273438 },
-              { lat: 3.1336599385978805, lng: 101.31866455078125 } // last point has to be same as first point
-            ];
   
             let point = {
               lat: 2.951269758090068,

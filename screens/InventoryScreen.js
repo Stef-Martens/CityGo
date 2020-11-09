@@ -26,7 +26,7 @@ export default class InventoryScreen extends React.Component {
       this.setState({data:respJson.sights})
     }
 
-    // er moet nog weergegeven of het voltooit is of niet met bv vinkje
+    // er moet nog weergegeven of het voltooid is of niet met bv vinkje
     render() {
       return ( 
         <View style={styles.container}>

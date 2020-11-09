@@ -10,12 +10,6 @@ import MapZelf from './MapZelf'
 
 const latitudeDelta = 0.0100
 const longitudeDelta = 0.0080
-const polygon = [
-  { latitude: 3.1336599385978805, longitude: 101.31866455078125 },
-  { latitude: 51.22369444, lnlongitudeg: 101.66198730468757 },
-  { latitude: 3.091150714460597, longitude: 4.41138889 },
-  { latitude: 3.1336599385978805, longitude: 101.31866455078125 } // last point has to be same as first point
-];
 
 export default class QuestionScreen extends React.Component {
     constructor(props) {
@@ -30,7 +24,12 @@ export default class QuestionScreen extends React.Component {
         coordinaten: {
           latitude: 0,
           longitude: 0
-        }
+        },
+        sights:[],
+        huidigeSightNaam:"(Naam van plaats)",
+        huidigeSightId:0,
+        vraag:"(Hier komt vraag van API)",
+        antwoord:""
       }
     }
   
@@ -57,15 +56,40 @@ export default class QuestionScreen extends React.Component {
             })
           }
         })
+        this.apiCallSights();
+
+        this.state.sights.forEach(element => {
+          // Dit is code om te zien of je in een bepaald polygon bent
+          GeoFencing.containsLocation(this.state.coordinaten, element.polygon)
+          // nu nog programmeren dat de bijgepaste challenge wordt geladen
+          .then(() => {
+            this.setState({huidigeSight:element.name})
+            this.setState({huidigeSightId:element.sightId})
+          })
+        });
+        this.apiCallChallenge();
     }
+
+    async apiCallSights(){
+      let resp2= await fetch('https://citygo.azurewebsites.net/sights')
+      let respJson2=await resp2.json();
+      this.setState({sights:respJson2.sights})
+    }
+
+    async apiCallChallenge(id){
+      let resp= await fetch('https://citygo.azurewebsites.net/challenges/${encodeURIComponent(id)}/Sights')
+      let respJson=await resp.json();
+      this.setState({vraag:respJson.task})
+      this.setState({antwoord:respJson.answer})
+    }
+
   
     //Hier wordt de vraag weergegeven die opgehaald wordt uit de api
-    //Momenteel een vaste waarde aan gegeven
     render() {
       return (
-        <View style={styles.container}>
-          <Text style={styles.header}>You are close to ....</Text>
-          <Text style={styles.question}>Van wie is het standbeeld aan het begin van de Meir</Text>
+        <View style={styles.container}>      
+          <Text style={styles.header}>You are close to {this.state.huidigeSight}.</Text>
+          <Text style={styles.question}>{this.state.vraag}</Text>
           <TextInput
             style={styles.textinput}
             placeholder="Answer"
