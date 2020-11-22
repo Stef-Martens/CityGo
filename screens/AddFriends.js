@@ -5,6 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
+import filter from 'lodash.filter';
+
 
 export default class AddFriends extends React.Component {
     state = {
@@ -25,7 +27,7 @@ export default class AddFriends extends React.Component {
 
     makeRemoteRequest = () => {
         const { page, seed } = this.state
-        const url = 'https://randomuser.me/api/?seed=${seed}&page=${page}&results=20'
+        const url = 'https://randomuser.me/api/?seed=${seed}&results=100'
         this.setState({ loading: true })
 
 
@@ -57,9 +59,9 @@ export default class AddFriends extends React.Component {
     }
 
     handleSearch = text => {
-        const formattedQuery = this.text.toLowercase()
+       // const formattedQuery = text.toLowercase()
         const data = filter(this.state.fullData, user => {
-            return this.contains(user, formattedQuery)
+            return this.contains(user, text)
         })
         this.setState({ data, query: text })
     }
@@ -73,11 +75,8 @@ export default class AddFriends extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-          <TouchableOpacity 
-             onPress={this.onPress}
-             style={styles.button}>
-              <Text style={styles.appButtonText} >Back</Text>
-            </TouchableOpacity>
+              <Text  onPress={this.onPress} style={styles.appButtonText} >Back</Text>
+
          <TextInput
                 autoCapitalize='none'
                 autoCorrect={false}
@@ -242,7 +241,6 @@ const styles = StyleSheet.create({
     },
     button: {
       flexDirection: "row",
-      alignSelf: "center",
       marginBottom: 10,
       elevation: 8,
       backgroundColor: "#FFF",
@@ -267,6 +265,7 @@ const styles = StyleSheet.create({
     },
     appButtonText: {
       fontSize: 15,
+      alignSelf: 'flex-start',
       color: "#000",
       fontWeight: "bold",
       alignSelf: "center",

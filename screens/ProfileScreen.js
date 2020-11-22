@@ -129,6 +129,14 @@ export default class ProfileScreen extends React.Component {
       this.props.changeComponent('Two')
   };
 
+  //logout functie
+  /*
+  logout = () => {
+    //logout via firebase afhandelen
+    this.props.changeComponent('Three')
+  };
+  */
+
   
   render() {
 
