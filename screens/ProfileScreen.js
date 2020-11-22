@@ -124,6 +124,11 @@ export default class ProfileScreen extends React.Component {
   alertItemName = (item) => {
     alert(item.name)
   }
+
+  onPress = () => {
+      this.props.changeComponent('Two')
+  };
+
   
   render() {
 
@@ -215,9 +220,10 @@ export default class ProfileScreen extends React.Component {
           </ScrollView>
 
           <View>
-
-            <TouchableOpacity style={styles.buttonlogout}>
-              <Text style={styles.appButtonText}>ADD FRIENDS</Text>
+            <TouchableOpacity 
+             onPress={this.onPress}
+             style={styles.buttonlogout}>
+              <Text style={styles.appButtonText} >ADD FRIENDS</Text>
             </TouchableOpacity>
           </View>
 
